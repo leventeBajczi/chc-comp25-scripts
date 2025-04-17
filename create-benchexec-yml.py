@@ -42,7 +42,7 @@ data = {
     "options": options,
 }
 
-yaml.dump(data, sys.stdout)
+# yaml.dump(data, sys.stdout)
 
 with open(description_yml, "w") as file:
     yaml.dump(data, file)

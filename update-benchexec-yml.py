@@ -8,8 +8,16 @@ import re
 prefix = sys.argv[1]
 test_results = sys.argv[2]
 
-with open(test_results, "r") as results:
+def truth(verdict):
+    match verdict:
+        case "true":
+            return True
+        case "false":
+            return False
+        case _:
+            return None
 
+with open(test_results, "r") as results:
     for line in results.readlines():
         if line.startswith(prefix):
             entries = re.split(r'\s+', line.strip())
@@ -29,10 +37,10 @@ with open(test_results, "r") as results:
                             old_verdict = None
                         
                         if new_verdict == "true" or new_verdict == "false":
-                            new_verdict = bool(new_verdict)
+                            new_verdict = truth(new_verdict)
 
                             if old_verdict:
-                                assert old_verdict == new_verdict, "mismatching verdict" + str(old_verdict) + " ~> " + str(new_verdict)
+                                assert old_verdict == new_verdict, "mismatching verdict" + old_verdict + " ~> " + new_verdict
                                 print("keeping verdict for  ", description_yml)
                             else:
                                 property["expected_verdict"] = new_verdict
