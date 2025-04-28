@@ -1,28 +1,17 @@
 <?xml version="1.0"?>
 <!DOCTYPE benchmark PUBLIC "+//IDN sosy-lab.org//DTD BenchExec benchmark 1.9//EN" "https://www.sosy-lab.org/benchexec/benchmark-2.3.dtd">
-<benchmark tool="golem" timelimit="1 min" hardtimelimit="1 min" memlimit="7 GB" cpuCores="2">
+<benchmark tool="chc2c" timelimit="1 min" hardtimelimit="1 min" memlimit="7 GB" cpuCores="2">
 
 <require cpuModel="Intel Xeon E3-1230 v5 @ 3.40 GHz"/>
 
 <rundefinition name="CHC-COMP2024_check-sat">
   <tasks name="LIA-Lin">
-    <option>--logic=QF_LIA</option>
-    <option>--engine=imc,pdkind,spacer,split-tpa</option>
     <includesfile>../../../chc-comp24-benchmarks/LIA-Lin.set</includesfile>
     <propertyfile>../../../chc-comp24-benchmarks/properties/check-sat.prp</propertyfile>
   </tasks>
 
   <tasks name="LIA">
-    <option>--logic=QF_LIA</option>
-    <option>--engine=spacer,pa</option>
     <includesfile>../../../chc-comp24-benchmarks/LIA.set</includesfile>
-    <propertyfile>../../../chc-comp24-benchmarks/properties/check-sat.prp</propertyfile>
-  </tasks>
-
-  <tasks name="LIA-Lin-Arrays">
-    <option>--logic=QF_ALIA</option>
-    <option>--engine=bmc,kind</option>
-    <includesfile>../../../chc-comp24-benchmarks/LIA-Lin-Arrays.set</includesfile>
     <propertyfile>../../../chc-comp24-benchmarks/properties/check-sat.prp</propertyfile>
   </tasks>
 </rundefinition>

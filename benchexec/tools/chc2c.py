@@ -16,7 +16,6 @@ class Tool(benchexec.tools.chc.ChcTool):
     REQUIRED_PATHS = [
         "chc_verif",
         "cvt-cache",
-        "cvt-output",
         "lib",
         "resources",
         "chc-comp25.sh",
@@ -27,6 +26,7 @@ class Tool(benchexec.tools.chc.ChcTool):
         return tool_locator.find_executable("chc-comp25.sh")
 
     def version(self, executable):
+        executable = executable.replace("chc-comp25.sh", "start")
         return self._version_from_tool(executable, line_prefix="chc_verif.py ")
 
     def name(self):
