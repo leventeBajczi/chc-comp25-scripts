@@ -1,0 +1,17 @@
+Origin of this CoAR package is from
+
+    docker pull ghcr.io/hiroshi-unno/coar:main
+
+Run the container
+
+    docker run -it ghcr.io/hiroshi-unno/coar:main
+
+Open a separate terminal, replace `$CONTAINER_ID` by the id shown in the shell prompts, `root@$CONTAINER_ID:/#`
+
+    docker cp $CONTAINER_ID:/root/coar/main.exe .
+    docker cp $CONTAINER_ID:/root/coar/config .
+
+Also make sure to copy the provided `libz3.so` (the one on the SV-COMP infrastructure is incompatible):
+
+    mkdir lib
+    docker cp $CONTAINER_ID:/lib/x86_64-linux-gnu/libz3.so lib
