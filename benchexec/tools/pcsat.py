@@ -10,21 +10,21 @@ import benchexec.tools.chc
 
 class Tool(benchexec.tools.chc.ChcTool):
     """
-    Tool info for Eldarica.
+    Tool info for PCSat.
     """
 
     REQUIRED_PATHS = [
-        "eld",
-        "eldEnv",
-        "bin",
-        "target",
+        "config",
+        "lib",
+        "main.exe",
+        "pcsat.sh",
     ]
 
     def executable(self, tool_locator):
-        return tool_locator.find_executable("eld")
+        return tool_locator.find_executable("pcsat.sh")
 
     def version(self, executable):
-        return self._version_from_tool(executable, "-h", line_prefix="Eldarica")
+        return self._version_from_tool(executable, arg="-version")
 
     def name(self):
-        return "Eldarica"
+        return "PCSat"

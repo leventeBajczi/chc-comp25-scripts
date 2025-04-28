@@ -10,21 +10,24 @@ import benchexec.tools.chc
 
 class Tool(benchexec.tools.chc.ChcTool):
     """
-    Tool info for Eldarica.
+    Tool info for Ultimate TreeAutomizer.
     """
 
     REQUIRED_PATHS = [
-        "eld",
-        "eldEnv",
-        "bin",
-        "target",
+        "Ultimate",
+        "TreeAutomizer.xml",
+        "chc-comp-wrapper.sh",
+        "TreeAutomizerHopcroftMinimization.epf",
     ]
 
     def executable(self, tool_locator):
-        return tool_locator.find_executable("eld")
+        return tool_locator.find_executable("chc-comp-wrapper.sh")
+
+    def cmdline(self, executable, options, task, rlimits):
+        return [executable, *options, task.single_input_file, "."]
 
     def version(self, executable):
-        return self._version_from_tool(executable, "-h", line_prefix="Eldarica")
+        return "(unknown version)"
 
     def name(self):
-        return "Eldarica"
+        return "Ultimate TreeAutomizer"

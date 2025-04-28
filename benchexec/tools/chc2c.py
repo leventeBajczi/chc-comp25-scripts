@@ -10,21 +10,24 @@ import benchexec.tools.chc
 
 class Tool(benchexec.tools.chc.ChcTool):
     """
-    Tool info for Eldarica.
+    Tool info for CHC2C.
     """
 
     REQUIRED_PATHS = [
-        "eld",
-        "eldEnv",
-        "bin",
-        "target",
+        "chc_verif",
+        "cvt-cache",
+        "cvt-output",
+        "lib",
+        "resources",
+        "chc-comp25.sh",
+        "start",
     ]
 
     def executable(self, tool_locator):
-        return tool_locator.find_executable("eld")
+        return tool_locator.find_executable("chc-comp25.sh")
 
     def version(self, executable):
-        return self._version_from_tool(executable, "-h", line_prefix="Eldarica")
+        return self._version_from_tool(executable, line_prefix="chc_verif.py ")
 
     def name(self):
-        return "Eldarica"
+        return "CHC2C"

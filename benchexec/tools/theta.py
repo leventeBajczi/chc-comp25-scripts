@@ -10,21 +10,23 @@ import benchexec.tools.chc
 
 class Tool(benchexec.tools.chc.ChcTool):
     """
-    Tool info for Eldarica.
+    Tool info for LoAT.
     """
 
     REQUIRED_PATHS = [
-        "eld",
-        "eldEnv",
-        "bin",
-        "target",
+        "lib",
+        "solvers",
+        "specification-transformation",
+        "theta-smtlib.jar",
+        "theta.jar",
+        "chc",
     ]
 
     def executable(self, tool_locator):
-        return tool_locator.find_executable("eld")
+        return tool_locator.find_executable("chc")
 
     def version(self, executable):
-        return self._version_from_tool(executable, "-h", line_prefix="Eldarica")
+        return self._version_from_tool(executable)
 
     def name(self):
-        return "Eldarica"
+        return "ThetaCHC"
