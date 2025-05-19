@@ -2,8 +2,7 @@
 import smtlib
 import sys
 
-model_file = sys.argv[1]
-chc_file = sys.argv[2]
+chc_file = sys.argv[1]
 assert chc_file.endswith(".smt2")
 
 smt_file = chc_file[:-4] + "-validate.smt2"
@@ -16,7 +15,8 @@ def define_funs(cmds, funs):
             case ("define-fun", name, *args):
                 funs[name] = cmd
 
-with open(model_file, "r") as file:
+if True:
+    file = sys.stdin
     status = file.readline().strip()
     assert status == "sat"
     content = file.read()
@@ -63,4 +63,5 @@ goal = ("assert", ("not", ("and", *clauses)))
 for line in smtlib.print_expr(goal):
     print(line)
 
+print("(set-info :status unsat)")
 print("(check-sat)")
