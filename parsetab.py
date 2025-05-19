@@ -38,5 +38,5 @@ _lr_productions = [
   ('expr -> LPAREN exprs RPAREN','expr',3,'p_expr_compound','smtlib.py',71),
   ('exprs -> <empty>','exprs',0,'p_exprs_first','smtlib.py',76),
   ('exprs -> exprs expr','exprs',2,'p_exprs_more','smtlib.py',81),
-  ('exprs -> exprs COMMENT','exprs',2,'p_exprs_comment','smtlib.py',86),
+  ('exprs -> exprs COMMENT','exprs',2,'p_exprs_comment','smtlib.py',87),
 ]

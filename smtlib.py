@@ -28,7 +28,7 @@ t_HEXADECIMAL = r"\#x[0-9a-fA-F]+"
 t_BINARY = r"\#b[01]+"
 t_STRING = r"\".*\""
 
-t_KEYWORD = r":[a-zA-Z][a-zA-Z0-9]*"
+t_KEYWORD = r":[a-zA-Z]([a-zA-Z0-9]|-)*"
 t_SYMBOL = r"([a-zA-Z~!@$%&*_+=<>.?/\^]|-)([a-zA-Z0-9~!@$%&*_+=<>.?/\^]|-)*"
 t_QSYMBOL = r"\|[^\|]*\|"
 
@@ -82,9 +82,11 @@ def p_exprs_more(p):
     p[1].append(p[2])
     p[0] = p[1]
 
+
 def p_exprs_comment(p):
     "exprs : exprs COMMENT"
     p[0] = p[1]
+
 
 def t_error(t):
     raise ValueError("Illegal character '%s'" % t.value[0])
@@ -100,3 +102,45 @@ def lexer():
 
 def parser():
     return yacc.yacc(start="exprs")
+
+
+def parse_expr(text):
+    lexer = lex.lex()
+    parser = yacc.yacc(start="expr")
+    return parser.parse(text, lexer=lexer)
+
+
+def parse_exprs(text):
+    lexer = lex.lex()
+    parser = yacc.yacc(start="exprs")
+    return parser.parse(text, lexer=lexer)
+
+
+def print_expr(expr):
+    match expr:
+        case ("NUMERAL" | "DECIMAL" | "HEXADECIMAL" | "BINARY", num):
+            return [num]
+        case ("STRING", text):
+            return ['"' + text + '"']
+        case str():
+            return [expr]
+        case exprs:
+            return format([line for expr in exprs for line in print_expr(expr)])
+
+def format(args):
+    if not args:
+        return ["()"]
+
+    m = max(len(arg) for arg in args)
+    s = sum(len(arg) for arg in args)
+
+    b = len(args) >= 2 and (m >= 40 or s >= 80)
+
+    if b:
+        x = "(" + args[0]
+        ys = ["  " + arg for arg in args[1:-1]]
+        z = "  " + args[-1] + ")"
+        return [x, *ys, z]
+    else:
+        x = " ".join(args)
+        return ["(" + x + ")"]
