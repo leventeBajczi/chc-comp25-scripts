@@ -6,7 +6,7 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'exprsBINARY COMMENT DECIMAL HEXADECIMAL KEYWORD LPAREN NUMERAL QSYMBOL RPAREN STRING SYMBOLexpr : NUMERALexpr : DECIMALexpr : HEXADECIMALexpr : BINARYexpr : STRINGexpr : KEYWORD\n| SYMBOL\n| QSYMBOLexpr : LPAREN exprs RPARENexprs :exprs : exprs exprexprs : exprs COMMENT'
+_lr_signature = 'exprsBINARY COMMENT DECIMAL HEXADECIMAL KEYWORD LPAREN NUMERAL QSYMBOL RPAREN STRING SYMBOLexpr : NUMERALexpr : DECIMALexpr : HEXADECIMALexpr : BINARYexpr : STRINGexpr : KEYWORDexpr : SYMBOLexpr : QSYMBOLexpr : LPAREN exprs RPARENexprs :exprs : exprs exprexprs : exprs COMMENT'
     
 _lr_action_items = {'COMMENT':([0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,],[-10,3,-11,-12,-1,-2,-3,-4,-5,-6,-7,-8,-10,3,-9,]),'NUMERAL':([0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,],[-10,4,-11,-12,-1,-2,-3,-4,-5,-6,-7,-8,-10,4,-9,]),'DECIMAL':([0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,],[-10,5,-11,-12,-1,-2,-3,-4,-5,-6,-7,-8,-10,5,-9,]),'HEXADECIMAL':([0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,],[-10,6,-11,-12,-1,-2,-3,-4,-5,-6,-7,-8,-10,6,-9,]),'BINARY':([0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,],[-10,7,-11,-12,-1,-2,-3,-4,-5,-6,-7,-8,-10,7,-9,]),'STRING':([0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,],[-10,8,-11,-12,-1,-2,-3,-4,-5,-6,-7,-8,-10,8,-9,]),'KEYWORD':([0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,],[-10,9,-11,-12,-1,-2,-3,-4,-5,-6,-7,-8,-10,9,-9,]),'SYMBOL':([0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,],[-10,10,-11,-12,-1,-2,-3,-4,-5,-6,-7,-8,-10,10,-9,]),'QSYMBOL':([0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,],[-10,11,-11,-12,-1,-2,-3,-4,-5,-6,-7,-8,-10,11,-9,]),'LPAREN':([0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,],[-10,12,-11,-12,-1,-2,-3,-4,-5,-6,-7,-8,-10,12,-9,]),'$end':([0,1,2,3,4,5,6,7,8,9,10,11,14,],[-10,0,-11,-12,-1,-2,-3,-4,-5,-6,-7,-8,-9,]),'RPAREN':([2,3,4,5,6,7,8,9,10,11,12,13,14,],[-11,-12,-1,-2,-3,-4,-5,-6,-7,-8,-10,14,-9,]),}
 
@@ -32,11 +32,11 @@ _lr_productions = [
   ('expr -> HEXADECIMAL','expr',1,'p_expr_hexadecimal','smtlib.py',49),
   ('expr -> BINARY','expr',1,'p_expr_binary','smtlib.py',54),
   ('expr -> STRING','expr',1,'p_expr_string','smtlib.py',59),
-  ('expr -> KEYWORD','expr',1,'p_expr_symbol','smtlib.py',64),
-  ('expr -> SYMBOL','expr',1,'p_expr_symbol','smtlib.py',65),
-  ('expr -> QSYMBOL','expr',1,'p_expr_symbol','smtlib.py',66),
-  ('expr -> LPAREN exprs RPAREN','expr',3,'p_expr_compound','smtlib.py',71),
-  ('exprs -> <empty>','exprs',0,'p_exprs_first','smtlib.py',76),
-  ('exprs -> exprs expr','exprs',2,'p_exprs_more','smtlib.py',81),
-  ('exprs -> exprs COMMENT','exprs',2,'p_exprs_comment','smtlib.py',87),
+  ('expr -> KEYWORD','expr',1,'p_expr_keyword','smtlib.py',64),
+  ('expr -> SYMBOL','expr',1,'p_expr_symbol','smtlib.py',68),
+  ('expr -> QSYMBOL','expr',1,'p_expr_qsymbol','smtlib.py',72),
+  ('expr -> LPAREN exprs RPAREN','expr',3,'p_expr_compound','smtlib.py',77),
+  ('exprs -> <empty>','exprs',0,'p_exprs_first','smtlib.py',82),
+  ('exprs -> exprs expr','exprs',2,'p_exprs_more','smtlib.py',87),
+  ('exprs -> exprs COMMENT','exprs',2,'p_exprs_comment','smtlib.py',93),
 ]

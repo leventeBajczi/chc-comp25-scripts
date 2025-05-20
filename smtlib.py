@@ -60,11 +60,17 @@ def p_expr_string(p):
     p[0] = ("STRING", p[1])
 
 
-def p_expr_symbol(p):
-    """expr : KEYWORD
-    | SYMBOL
-    | QSYMBOL"""
+def p_expr_keyword(p):
+    """expr : KEYWORD"""
     p[0] = p[1]
+
+def p_expr_symbol(p):
+    """expr : SYMBOL"""
+    p[0] = p[1]
+
+def p_expr_qsymbol(p):
+    """expr : QSYMBOL"""
+    p[0] = p[1][1:-1]
 
 
 def p_expr_compound(p):
@@ -116,14 +122,22 @@ def parse_exprs(text):
     return parser.parse(text, lexer=lexer)
 
 
+def needs_quotes(sym):
+    import re
+    return re.fullmatch(t_SYMBOL, sym) is None
+
+
 def print_expr(expr):
     match expr:
         case ("NUMERAL" | "DECIMAL" | "HEXADECIMAL" | "BINARY", num):
             return [num]
         case ("STRING", text):
             return ['"' + text + '"']
-        case str():
-            return [expr]
+        case str() as sym:
+            if needs_quotes(sym):
+                return ["|" + sym + "|"]
+            else:
+                return [sym]
         case exprs:
             return format([line for expr in exprs for line in print_expr(expr)])
 

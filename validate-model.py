@@ -20,12 +20,17 @@ if True:
     status = file.readline().strip()
     assert status == "sat"
     content = file.read()
-    model = smtlib.parse_expr(content)
+    model = smtlib.parse_exprs(content)
 
     match model:
-        case ("model", *cmds):
+        # SMT-LIB standard
+        case [("model", *cmds)]:
             define_funs(cmds, funs)
-        case cmds:
+        # Eldarica
+        case [("define-fun", *_), *_] as cmds:
+            define_funs(cmds, funs)
+        # Z3
+        case [cmds]:
             define_funs(cmds, funs)
 
 with open(chc_file, "r") as file:
@@ -40,6 +45,9 @@ for cmd in cmds:
         case ("set-logic", "HORN"):
             defs.append(("set-logic", "ALL"))
 
+        case ("set-option", ":produce-models", "true"):
+            pass
+
         case ("declare-fun", name, *args):
             defs.append(funs[name])
 
@@ -49,6 +57,8 @@ for cmd in cmds:
         case ("check-sat", ):
             pass
         case ("get-model", ):
+            pass
+        case ("exit", ):
             pass
 
         case _:
