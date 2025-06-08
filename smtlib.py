@@ -127,6 +127,44 @@ def needs_quotes(sym):
     return re.fullmatch(t_SYMBOL, sym) is None
 
 
+def print_expr_non_recursive(expr):
+    stack = [(expr, False)]  # (node, visited_flag)
+    result_stack = []        # Holds intermediate results
+
+    while stack:
+        node, visited = stack.pop()
+
+        if not visited:
+            # Handle atomic expressions
+            match node:
+                case ("NUMERAL" | "DECIMAL" | "HEXADECIMAL" | "BINARY", num):
+                    result_stack.append([num])
+                    continue
+                case ("STRING", text):
+                    result_stack.append(['"' + text + '"'])
+                    continue
+                case str() as sym:
+                    if needs_quotes(sym):
+                        result_stack.append(["|" + sym + "|"])
+                    else:
+                        result_stack.append([sym])
+                    continue
+                case list() | tuple():
+                    # Push a marker to collect results later
+                    stack.append((node, True))
+                    for subexpr in node:
+                        stack.append((subexpr, False))
+                case _:
+                    raise ValueError(f"Unknown node type: {node}")
+        else:
+            # We've visited all children, now combine them
+            subresults = [result_stack.pop() for _ in range(len(node))]
+            flat = [line for sub in subresults for line in sub]
+            result_stack.append(format(flat))
+
+    assert len(result_stack) == 1
+    return result_stack.pop()
+
 def print_expr(expr):
     match expr:
         case ("NUMERAL" | "DECIMAL" | "HEXADECIMAL" | "BINARY", num):
