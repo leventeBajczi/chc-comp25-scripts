@@ -9,16 +9,21 @@ smt_file = chc_file[:-4] + "-validate.smt2"
 
 funs = {}
 
+
 def define_funs(cmds, funs):
     for cmd in cmds:
         match cmd:
             case ("define-fun", name, *args):
                 funs[name] = cmd
 
+
 if True:
     file = sys.stdin
-    status = file.readline().strip()
-    assert status == "sat"
+    for line in file:
+        if line.strip() == "sat":
+            break
+    else:
+        raise ValueError("No line with 'sat' found")
     content = file.read()
     model = smtlib.parse_exprs(content)
 
@@ -34,8 +39,8 @@ if True:
             define_funs(cmds, funs)
 
 with open(chc_file, "r") as file:
-   content = file.read()
-   cmds = smtlib.parse_exprs(content)
+    content = file.read()
+    cmds = smtlib.parse_exprs(content)
 
 defs = []
 clauses = []
@@ -54,11 +59,11 @@ for cmd in cmds:
         case ("assert", phi):
             clauses.append(phi)
 
-        case ("check-sat", ):
+        case ("check-sat",):
             pass
-        case ("get-model", ):
+        case ("get-model",):
             pass
-        case ("exit", ):
+        case ("exit",):
             pass
 
         case _:
