@@ -65,7 +65,7 @@ for cmd in cmds:
             defs.append(cmd)
 
 for cmd in defs:
-    for line in smtlib.print_expr(cmd):
+    for line in smtlib.print_expr_non_recursive(cmd):
         print(line)
 
 goal = ("assert", ("not", ("and", *clauses)))
