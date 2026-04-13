@@ -22,6 +22,9 @@ class Tool(benchexec.tools.chc.ChcTool):
         "chc",
     ]
 
+    def cmdline(self, executable, options, task, rlimits):
+        return [executable, task.single_input_file] + options
+
     def executable(self, tool_locator):
         return tool_locator.find_executable("chc")
 
